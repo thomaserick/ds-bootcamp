@@ -1,5 +1,6 @@
 package com.tef.dscatalog.resources.exceptions;
 
+import com.tef.dscatalog.services.exception.DatabaseException;
 import com.tef.dscatalog.services.exception.ResourceNotFoundException;
 import java.time.Instant;
 import javax.servlet.http.HttpServletRequest;
@@ -24,4 +25,21 @@ public class ResourceExceptionHandler
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
+
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<StandardError> database(ResourceNotFoundException e,
+		HttpServletRequest request)
+	{
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError error = new StandardError();
+		error.setTimestamp(Instant.now());
+		error.setStatus(status.value());
+		error.setError("Database exception");
+		error.setMessage(e.getMessage());
+		error.setPath(request.getRequestURI());
+
+		return ResponseEntity.status(status).body(error);
+	}
+
+
 }
