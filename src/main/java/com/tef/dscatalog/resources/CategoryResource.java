@@ -1,7 +1,6 @@
 package com.tef.dscatalog.resources;
 
 import com.tef.dscatalog.dto.CategoryDTO;
-import com.tef.dscatalog.entities.Category;
 import com.tef.dscatalog.services.CatetoryServices;
 import java.net.URI;
 import java.util.List;
@@ -41,6 +40,16 @@ public class CategoryResource
 			.buildAndExpand(dto.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(dto);
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto)
+	{
+		dto = catetoryServices.update(id,dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+			.buildAndExpand(dto.getId()).toUri();
+
+		return ResponseEntity.ok().body(dto);
 
 	}
 }

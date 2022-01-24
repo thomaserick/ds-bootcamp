@@ -1,6 +1,6 @@
 package com.tef.dscatalog.resources.exceptions;
 
-import com.tef.dscatalog.services.exception.EntityNotFoundException;
+import com.tef.dscatalog.services.exception.ResourceNotFoundException;
 import java.time.Instant;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ResourceExceptionHandler
 {
-	@ExceptionHandler(EntityNotFoundException.class)
-	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e,
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e,
 		HttpServletRequest request)
 	{
 		StandardError error = new StandardError();
