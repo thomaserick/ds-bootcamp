@@ -1,5 +1,6 @@
 package com.tef.dscatalog.resources;
 
+import com.tef.dscatalog.dto.CategoryDTO;
 import com.tef.dscatalog.entities.Category;
 import com.tef.dscatalog.services.CatetoryServices;
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ public class CategoryResource
 	private CatetoryServices catetoryServices;
 
 	@GetMapping
-	public ResponseEntity<List<Category>> findAll()
+	public ResponseEntity<List<CategoryDTO>> findAll()
 	{
-		List<Category> categories = catetoryServices.findAll();
+		List<CategoryDTO> categories = catetoryServices.findAll();
 
 		return ResponseEntity.ok(categories);
 	}
