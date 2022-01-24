@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
 public class CatetoryServices
@@ -31,5 +34,16 @@ public class CatetoryServices
 		Optional<Category> obj = categoryRepository.findById(id);
 		Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not Found"));
 		return new CategoryDTO(entity);
+	}
+
+
+	@Transactional()
+	public CategoryDTO insert(CategoryDTO dto)
+	{
+		Category category = new Category();
+		category.setName(dto.getName());
+		category = categoryRepository.save(category);
+		return new CategoryDTO(category);
+
 	}
 }
