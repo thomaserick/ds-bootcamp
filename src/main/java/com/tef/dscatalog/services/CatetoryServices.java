@@ -5,13 +5,13 @@ import com.tef.dscatalog.entities.Category;
 import com.tef.dscatalog.repositories.CategoryRepository;
 import com.tef.dscatalog.services.exception.DatabaseException;
 import com.tef.dscatalog.services.exception.ResourceNotFoundException;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +23,10 @@ public class CatetoryServices
 
 	//Não da lock no banco de dados
 	@Transactional(readOnly = true)
-	public List<CategoryDTO> findAll()
+	public Page<CategoryDTO> findAllPaged(PageRequest pageRequest)
 	{
-		List<Category> list = categoryRepository.findAll();
-		return list.stream().map(CategoryDTO::new).collect(Collectors.toList());
+		Page<Category> list = categoryRepository.findAll(pageRequest);
+		return list.map(CategoryDTO::new);
 	}
 
 	@Transactional(readOnly = true)
@@ -66,18 +66,23 @@ public class CatetoryServices
 
 	/**
 	 * Sem transaction para capturar do banco de dados
-	 * */
+	 */
 	public void delete(Long id)
 	{
-		try{
+		try
+		{
 
 			categoryRepository.deleteById(id);
-		}catch (EmptyResultDataAccessException e)
+		}
+		catch (EmptyResultDataAccessException e)
 		{
 			throw new ResourceNotFoundException("Id not found" + id);
-		}catch (DataIntegrityViolationException e)
+		}
+		catch (DataIntegrityViolationException e)
 		{
 			throw new DatabaseException("Integrity violation" + id);
 		}
 	}
+
+
 }
