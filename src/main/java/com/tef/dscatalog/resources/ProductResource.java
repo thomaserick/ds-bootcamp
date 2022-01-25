@@ -1,7 +1,7 @@
 package com.tef.dscatalog.resources;
 
-import com.tef.dscatalog.dto.CategoryDTO;
-import com.tef.dscatalog.services.CatetoryServices;
+import com.tef.dscatalog.dto.ProductDTO;
+import com.tef.dscatalog.services.ProductServices;
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping(value = "/categories")
-public class CategoryResource
+@RequestMapping(value = "/products")
+public class ProductResource
 {
 	@Autowired
-	private CatetoryServices catetoryServices;
+	private ProductServices productServices;
 
 	@GetMapping
-	public ResponseEntity<Page<CategoryDTO>> findAll(
+	public ResponseEntity<Page<ProductDTO>> findAll(
 		@RequestParam(value = "page", defaultValue = "0") Integer page,
 		@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
 		@RequestParam(value = "orderBy", defaultValue = "ASC") String direction,
@@ -27,22 +27,22 @@ public class CategoryResource
 	{
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction),
 			orderBy);
-		Page<CategoryDTO> categories = catetoryServices.findAllPaged(pageRequest);
-		return ResponseEntity.ok(categories);
+		Page<ProductDTO> products = productServices.findAllPaged(pageRequest);
+		return ResponseEntity.ok(products);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<CategoryDTO> findById(@PathVariable Long id)
+	public ResponseEntity<ProductDTO> findById(@PathVariable Long id)
 
 	{
-		CategoryDTO categoryDTO = catetoryServices.findById(id);
-		return ResponseEntity.ok(categoryDTO);
+		ProductDTO ProductDTO = productServices.findById(id);
+		return ResponseEntity.ok(ProductDTO);
 	}
 
 	@PostMapping
-	public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto)
+	public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto)
 	{
-		dto = catetoryServices.insert(dto);
+		dto = productServices.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 			.buildAndExpand(dto.getId()).toUri();
 
@@ -50,11 +50,9 @@ public class CategoryResource
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto)
+	public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto)
 	{
-		dto = catetoryServices.update(id, dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-			.buildAndExpand(dto.getId()).toUri();
+		dto = productServices.update(id, dto);
 
 		return ResponseEntity.ok().body(dto);
 
@@ -63,7 +61,7 @@ public class CategoryResource
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id)
 	{
-		catetoryServices.delete(id);
+		productServices.delete(id);
 		return ResponseEntity.noContent().build();
 
 	}
