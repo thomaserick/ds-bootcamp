@@ -1,7 +1,3 @@
-# ds-bootcamp
-DevSuperior bootcamp
-
-
 ## Backend
 
 - Classe Domain
