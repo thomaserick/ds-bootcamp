@@ -1,7 +1,9 @@
 package com.tef.dscatalog.services;
 
 import com.tef.dscatalog.dto.ProductDTO;
+import com.tef.dscatalog.entities.Category;
 import com.tef.dscatalog.entities.Product;
+import com.tef.dscatalog.repositories.CategoryRepository;
 import com.tef.dscatalog.repositories.ProductRepository;
 import com.tef.dscatalog.services.exception.DatabaseException;
 import com.tef.dscatalog.services.exception.ResourceNotFoundException;
@@ -21,12 +23,15 @@ public class ProductServices
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private CategoryRepository categoryRepository;
+
 	//Não da lock no banco de dados
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(PageRequest pageRequest)
 	{
 		Page<Product> list = productRepository.findAll(pageRequest);
-		return list.map(product -> new ProductDTO(product,product.getCategories()));
+		return list.map(product -> new ProductDTO(product, product.getCategories()));
 
 	}
 
@@ -43,7 +48,7 @@ public class ProductServices
 	public ProductDTO insert(ProductDTO dto)
 	{
 		Product product = new Product();
-		//product.setName(dto.getName());
+		copyDtoToEntity(dto, product);
 		product = productRepository.save(product);
 		return new ProductDTO(product);
 
@@ -55,7 +60,7 @@ public class ProductServices
 		try
 		{
 			Product entity = productRepository.getById(id);
-			//entity.setName(dto.getName());
+			copyDtoToEntity(dto, entity);
 			entity = productRepository.save(entity);
 			return new ProductDTO(entity);
 		}
@@ -83,6 +88,23 @@ public class ProductServices
 		{
 			throw new DatabaseException("Integrity violation" + id);
 		}
+	}
+
+
+	private void copyDtoToEntity(ProductDTO dto, Product product)
+	{
+		product.setName(dto.getName());
+		product.setDescription(dto.getDescription());
+		product.setPrice(dto.getPrice());
+		product.setImgUrl(dto.getImgUrl());
+
+		//Limpar as categorias
+		product.getCategories().clear();
+		dto.getCategories().stream().forEach(categoryDTO -> {
+			Category category = categoryRepository.getById(categoryDTO.getId());
+			product.getCategories().add(category);
+		});
+
 	}
 
 

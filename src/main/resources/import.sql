@@ -54,3 +54,15 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (22, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (23, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (24, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (25, 3);
+
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Sebastião Rafael Lima','15687955305',100.0,'1989-01-24T10:30:00Z',2);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Bruno Arthur Dias','70117498378',200.0,'1989-05-23T10:30:00Z',0);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Bryan Hugo Ryan Pires','48974559366',300.0,'1988-10-29T10:30:00Z',1);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Theo Samuel Miguel Freitas','85467301306',400.0,'1988-06-28T10:30:00Z',3);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Pedro Henrique Martin Bernardes','29812555331',500.0,'1990-06-14T10:30:00Z',1);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Lucca Lucas Carlos Barbosa','51028813376',600.0,'1993-05-15T10:30:00Z',2);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Levi Gustavo Bernardo Pires','28887469300',700.0,'1960-10-06T10:30:00Z',1);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Giovanni Márcio Thales da Silva','34382209382',800.0,'1985-11-01T10:30:00Z',0);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Samuel Tiago da Rosa','29769917311',900.0,'1970-12-23T10:30:00Z',3);
+INSERT INTO tb_client(name, cpf, income, birth_date, children) VALUES ('Victor Anderson de Paula','87301771380',1000.0,'1963-05-10T10:30:00Z',5);
+
