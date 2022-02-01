@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(ProductResource.class)
-class ProductResourcesTests
+class ProductResourceTests
 {
 
 	@Autowired
